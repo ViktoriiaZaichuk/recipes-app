@@ -3,10 +3,9 @@ const fs = require('fs');
 const path = require('path');
 const config = require('../config/config');
 
-const sequelize = new Sequelize({  
-    ...config.development,
-    dialect: process.env.DB_DIALECT, 
-});
+const sequelize = new Sequelize( 
+    config.development,
+);
 
 const db = {};
 

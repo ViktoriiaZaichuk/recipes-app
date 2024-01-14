@@ -6,11 +6,6 @@ A simple Recipe Database application built with PostgreSQL, Node.js, and React.
 
 - [Features](#features)
 - [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Database Schema](#database-schema)
-- [API Endpoints](#api-endpoints)
-- [Client-side Setup](#client-side-setup)
 
 
 ## Features
