@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-//const routes = require('./routes'); 
+const routes = require('./app/routes/apiRoutes'); 
 
 const app = express();
 
@@ -11,7 +11,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Routes
-//app.use('/api', routes); 
+app.use('/api', routes); 
 
 // Start the server
 const PORT = process.env.PORT || 3001;
