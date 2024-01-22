@@ -5,6 +5,7 @@ node_modules/
 /server/node_modules/
 /server/dist/
 /server/.env
+/server/notes.md
 
 # Client-specific
 /client/node_modules/
