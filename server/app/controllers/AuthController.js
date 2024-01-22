@@ -4,46 +4,59 @@ const { generateToken, hashPassword, comparePassword } = require('../services/Au
 const AuthController = {
     register: async (req, res) => {
         try {
-          const { username, email, password, avatar } = req.body;
-          const hashedPassword = await hashPassword(password);
+            const { username, email, password, avatar } = req.body;
+            const hashedPassword = await hashPassword(password);
           
-          const user = await User.create({
-            username,
-            email,
-            password: hashedPassword,
-            avatar: avatar,
-          });
-    
-          const token = generateToken(user.id);
+            if (!username || !email || !password) {
+                return res.status(400).json({ message: 'Please provide all required fields.' });
+            }
 
-          return res.status(201).json({ token });
+            if (password.length < 8) {
+                return res.status(400).json({ message: 'Password must be at least 8 characters long.' });
+            }
+
+            const existingUser = await User.findOne({ where: { email } });
+            if (existingUser) {
+                return res.status(409).json({ message: 'User with this email already exists.' });
+            }
+
+            const user = await User.create({
+                username,
+                email,
+                password: hashedPassword,
+                avatar: avatar,
+            });
+        
+            const token = generateToken(user.id);
+
+            return res.status(201).json({ user: user, token, message: 'User created successfully and validation email sent successfully' });
         } catch (error) {
-          console.error(error);
-          return res.status(500).json({ message: 'Internal Server Error LALAL' });
+            console.error(error);
+            return res.status(500).json({ message: 'Internal Server Error', error: error.message });
         }
     },
 
     login: async (req, res) => {
         try {
-          const { email, password } = req.body;
-          const user = await User.findOne({ where: { email } });
+            const { email, password } = req.body;
+            const user = await User.findOne({ where: { email } });
      
-          if (!user) {
-            return res.status(401).json({ message: 'Invalid credentials' });
-          }
+            if (!user) {
+                return res.status(401).json({ message: 'Invalid credentials' });
+            }
+        
+            const passwordMatch = await comparePassword(password, user.password);
+        
+            if (!passwordMatch) {
+                return res.status(401).json({ message: 'Invalid credentials' });
+            }
+        
+            const token = generateToken(user.id);
     
-          const passwordMatch = await comparePassword(password, user.password);
-    
-          if (!passwordMatch) {
-            return res.status(401).json({ message: 'Invalid credentials' });
-          }
-    
-          const token = generateToken(user.id);
-    
-          return res.status(200).json({ token });
+            return res.status(200).json({ user: user, token, message: 'User logged in successfully' });
         } catch (error) {
-          console.error(error);
-          return res.status(500).json({ message: 'Internal Server Error' });
+            console.error(error);
+            return res.status(500).json({ message: 'Internal Server Error', error: error.message });
         }
     },
 }
