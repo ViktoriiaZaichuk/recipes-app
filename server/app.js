@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const helmet = require('helmet');
 const routes = require('./app/routes/apiRoutes'); 
@@ -10,6 +11,7 @@ const app = express();
 // Middleware
 app.use(bodyParser.json());
 app.use(cors());
+app.use(cookieParser());
 
 // Use helmet middleware
 app.use(helmet());

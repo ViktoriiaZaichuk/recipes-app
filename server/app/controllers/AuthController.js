@@ -50,8 +50,12 @@ const AuthController = {
             if (!passwordMatch) {
                 return res.status(401).json({ message: 'Invalid credentials' });
             }
-        
+
+            // Generate JWT
             const token = generateToken(user.id);
+
+            // Set JWT in HTTP-only cookie
+            res.cookie('jwt', token, { httpOnly: true });
     
             return res.status(200).json({ user: user, token, message: 'User logged in successfully' });
         } catch (error) {
