@@ -12,6 +12,8 @@ const Register = () => {
         password: '',
     });
 
+    const [errors, setErrors] = useState({});
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setUserData((prevUserData) => ({
@@ -22,6 +24,37 @@ const Register = () => {
     
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        // Client-side validation
+        const validationErrors = {};
+
+        if (!userData.username.trim()) {
+            validationErrors.username = "Username is required";
+        }
+
+        if (!userData.email.trim()) {
+            validationErrors.email = "Email is required";
+        } else if (!/\S+@\S+\.\S+/.test(userData.email)) {
+            validationErrors.email = "Invalid email format";
+        }
+
+        if (!userData.avatar.trim()) {
+            validationErrors.avatar = "Avatar is required";
+        }
+
+        if (!userData.password.trim()) {
+            validationErrors.password = "Password is required";
+        }
+
+        if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors);
+            return;
+        }
+
+        // Clear previous errors if there are any
+        setErrors({});
+
+
         try {
           await register(userData);
         } catch (error) {
@@ -44,6 +77,7 @@ const Register = () => {
                             label="User name"
                             type="text" 
                             placeholder="Tony Stark"
+                            error={errors.username}
                             value={userData.username}
                             onChange={handleChange}
                         />
@@ -52,6 +86,7 @@ const Register = () => {
                             label="Avatar"
                             type="text"
                             placeholder="" 
+                            error={errors.avatar}
                             value={userData.avatar}
                             onChange={handleChange}
                         />
@@ -59,7 +94,8 @@ const Register = () => {
                             name="email"
                             label="Email"
                             type="email"
-                            placeholder="tony.stark@ts.io" 
+                            placeholder="tony.stark@ts.io"
+                            error={errors.email} 
                             value={userData.email}
                             onChange={handleChange}
                         />
@@ -68,6 +104,7 @@ const Register = () => {
                             label="Password"
                             type="password"
                             placeholder="" 
+                            error={errors.password}
                             value={userData.password}
                             onChange={handleChange}
                         />
