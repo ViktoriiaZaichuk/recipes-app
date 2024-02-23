@@ -64,12 +64,12 @@ const Register = () => {
 
     return (
        <Layout>
-            <main>
-                <h1>Register form</h1>
+            <main className="flex flex-col content-center flex-wrap">
+                <h1 className="font-mono uppercase text-2xl font-bold p-3 pb-5 text-center">Register form</h1>
 
                 <div className="w-full max-w-xs">
                     <form 
-                        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+                        className="bg-white flex flex-col shadow-md rounded px-8 pt-6 pb-8 mb-4"
                         onSubmit={handleSubmit}
                     >
                         <TextInput 
