@@ -22,7 +22,7 @@ function App() {
 
 
   return (
-    <div className="App ">
+    <div className='bg-light'>
       <RouterProvider router={router} />
     </div>
   );

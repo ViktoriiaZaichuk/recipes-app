@@ -4,7 +4,9 @@ const Login = () => {
 
     return (
         <Layout>
-            
+            <main>
+                <h1>Login form</h1>
+            </main>
         </Layout>
     );
 };

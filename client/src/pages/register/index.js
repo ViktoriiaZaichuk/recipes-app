@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Layout from "../../components/layout/Layout";
 import TextInput from "../../components/form/TextInput";
 import { register } from "../../services/api/auth";
-import SubmitBtn from "../../components/form/SubmitBtn";
+import PrimaryBtn from "../../components/form/PrimaryBtn";
 
 const Register = () => {
     const [userData, setUserData] = useState({
@@ -108,7 +108,7 @@ const Register = () => {
                             value={userData.password}
                             onChange={handleChange}
                         />
-                        <SubmitBtn 
+                        <PrimaryBtn 
                             text="Register"
                             type="submit"
                         />
