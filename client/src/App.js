@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import Home from './pages/home';
 import Register from './pages/register';
+import RegisterSuccess from './pages/register/RegisterSuccess';
 import Login from './pages/login';
 
 function App() {
@@ -13,6 +14,10 @@ function App() {
     {
       path: '/register',
       element: <Register />,
+    },
+    {
+      path: '/register/success',
+      element: <RegisterSuccess />,
     },
     {
       path: '/login',

@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import Layout from "../../components/layout/Layout";
 import TextInput from "../../components/form/TextInput";
 import { register } from "../../services/api/auth";
@@ -13,6 +15,7 @@ const Register = () => {
     });
 
     const [errors, setErrors] = useState({});
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -54,9 +57,9 @@ const Register = () => {
         // Clear previous errors if there are any
         setErrors({});
 
-
         try {
           await register(userData);
+          navigate('/register/success');
         } catch (error) {
           console.error('Error during registration: ', error);
         }
@@ -64,7 +67,7 @@ const Register = () => {
 
     return (
        <Layout>
-            <main className="flex flex-col content-center flex-wrap">
+            <main className="flex flex-col content-center flex-wrap m-5">
                 <h1 className="font-mono uppercase text-2xl font-bold p-3 pb-5 text-center">Register form</h1>
 
                 <div className="w-full max-w-xs">
@@ -103,7 +106,7 @@ const Register = () => {
                             name="password"
                             label="Password"
                             type="password"
-                            placeholder="" 
+                            placeholder="********"
                             error={errors.password}
                             value={userData.password}
                             onChange={handleChange}
